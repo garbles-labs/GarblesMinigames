@@ -27,5 +27,9 @@ public class Launcher : MonoBehaviour
         
         Rigidbody rb = ball.GetComponent<Rigidbody>();
         rb.AddForce(_ballOrigin.forward * _launchForce, ForceMode.Impulse);
+
+        float dir = Random.Range(0, 2) == 0 ? -1f:1f;
+
+        rb.AddTorque(Random.insideUnitSphere * dir, ForceMode.Impulse);
     }
 }
