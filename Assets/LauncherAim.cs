@@ -19,6 +19,9 @@ public class LauncherAim : MonoBehaviour
     Transform _pitchTr;
 
 
+    public float yaw{set{_yaw = value;}}
+
+
     void Update()
     {
         _yawTr.localRotation = Quaternion.Euler(0f, _yaw, 0f);

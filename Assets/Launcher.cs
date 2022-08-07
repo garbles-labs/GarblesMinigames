@@ -2,20 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(LauncherAim))]
 public class Launcher : MonoBehaviour
 {
     [SerializeField][Range(0.1f, 3f)]
-    float _minLaunchForce = 0.1f;
-
-    [SerializeField][Range(0.1f, 3f)]
-    float _maxLaunchForce = 3;
-
-    [SerializeField] 
-    float _timeInterval = 0.5f;
-
-    [SerializeField]
-    float _spreadAngle = 5f;
-
+    float _launchForce = 0.1f;
 
     [SerializeField]
     GameObject _ballPrototype;
@@ -23,24 +14,18 @@ public class Launcher : MonoBehaviour
     [SerializeField]
     Transform _ballOrigin;
 
-    IEnumerator Start()
-    {
-        while(true){
-            yield return new WaitForSeconds(_timeInterval);
 
-            GameObject ball = Instantiate(_ballPrototype, _ballOrigin.position, _ballOrigin.rotation);
-            Launch(ball);
-        }
+    public float launchForce{set{
+        _launchForce = value;
+    }}
 
-    }
+    
 
 
-    public void Launch(GameObject ball) {
+    public void Launch() {
+        GameObject ball = Instantiate(_ballPrototype, _ballOrigin.position, _ballOrigin.rotation);
+        
         Rigidbody rb = ball.GetComponent<Rigidbody>();
-
-        float force = Random.Range(_minLaunchForce, _maxLaunchForce);
-
-        rb.AddForce(_ballOrigin.forward * force, ForceMode.Impulse);
+        rb.AddForce(_ballOrigin.forward * _launchForce, ForceMode.Impulse);
     }
-
 }
