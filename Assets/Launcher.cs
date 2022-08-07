@@ -14,18 +14,21 @@ public class Launcher : MonoBehaviour
     float _timeInterval = 0.5f;
 
     [SerializeField]
-    ForceMode _mode;
+    float _spreadAngle = 5f;
 
 
     [SerializeField]
     GameObject _ballPrototype;
+
+    [SerializeField]
+    Transform _ballOrigin;
 
     IEnumerator Start()
     {
         while(true){
             yield return new WaitForSeconds(_timeInterval);
 
-            GameObject ball = Instantiate(_ballPrototype, transform.position, transform.rotation);
+            GameObject ball = Instantiate(_ballPrototype, _ballOrigin.position, _ballOrigin.rotation);
             Launch(ball);
         }
 
@@ -37,7 +40,7 @@ public class Launcher : MonoBehaviour
 
         float force = Random.Range(_minLaunchForce, _maxLaunchForce);
 
-        rb.AddForce(transform.forward * force, _mode);
+        rb.AddForce(_ballOrigin.forward * force, ForceMode.Impulse);
     }
 
 }
