@@ -217,7 +217,7 @@ GameObject:
   - component: {fileID: 326075060}
   - component: {fileID: 326075061}
   m_Layer: 0
-  m_Name: GameObject
+  m_Name: SwipeDetector
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -249,6 +249,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f14fefba553cc4b409df7c2b3c0a73d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _thresholdTime: 1
+  _inputType: 1
 --- !u!1001 &800217105
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -303,6 +305,10 @@ PrefabInstance:
     - target: {fileID: 431402028152483607, guid: 7e7ee96ea50fbcc4da5e198c526e6bb7, type: 3}
       propertyPath: m_Name
       value: Bin (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 431402028152483607, guid: 7e7ee96ea50fbcc4da5e198c526e6bb7, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7e7ee96ea50fbcc4da5e198c526e6bb7, type: 3}
@@ -570,6 +576,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Bin (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 431402028152483607, guid: 7e7ee96ea50fbcc4da5e198c526e6bb7, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7e7ee96ea50fbcc4da5e198c526e6bb7, type: 3}
 --- !u!1001 &431402027579002279
@@ -627,6 +637,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Bin
       objectReference: {fileID: 0}
+    - target: {fileID: 431402028152483607, guid: 7e7ee96ea50fbcc4da5e198c526e6bb7, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7e7ee96ea50fbcc4da5e198c526e6bb7, type: 3}
 --- !u!1001 &3061204921306447287
@@ -639,6 +653,10 @@ PrefabInstance:
     - target: {fileID: 3061204921835206928, guid: 9ba76bbfa312ed549bbd05f4e8213993, type: 3}
       propertyPath: m_Name
       value: Launcher
+      objectReference: {fileID: 0}
+    - target: {fileID: 3061204921835206928, guid: 9ba76bbfa312ed549bbd05f4e8213993, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3061204921835206942, guid: 9ba76bbfa312ed549bbd05f4e8213993, type: 3}
       propertyPath: m_RootOrder
