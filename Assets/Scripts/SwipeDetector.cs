@@ -2,12 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Swipe : MonoBehaviour
+public class SwipeDetector : MonoBehaviour
 {
     enum InputType{Mouse=1, Touch=2}
     
-    public List<Vector2> _positions;
-    public List<float> _times;
 
     [SerializeField]
     float _thresholdTime = 1;
@@ -15,10 +13,22 @@ public class Swipe : MonoBehaviour
     [SerializeField]
     InputType _inputType = InputType.Mouse;
 
-
-
+    [Header("DEBUG VARIABLES")]
+    public List<Vector2> _positions;
+    public List<float> _times;
     Vector2 _lastMousePosition;
 
+    public System.Action<Vector2, float> onSwipeDetected; // direction,time
+
+
+
+/*
+    void Awake() {
+#if UNITY_ANDROID_API
+        _inputType = InputType.Touch;
+#endif
+    }
+*/
 
     void Update()
     {
@@ -50,15 +60,16 @@ public class Swipe : MonoBehaviour
 
             if(detect) {
                 if(DetectSwipe(pos, phase, out Vector2 direction, out float time)) {
-                    Debug.Log("TIME: " + time);
-                    Debug.Log("DIRECTION: " + direction);
+                    if(onSwipeDetected != null)
+                        onSwipeDetected(direction,time);
                 }
             }
         }
         else if(_inputType == InputType.Touch) {
             if(Input.touchCount > 0){
                 if(DetectSwipe(Input.touches[0].position, Input.touches[0].phase, out Vector2 direction, out float time)) {
-                    Debug.Log(time);
+                    if(onSwipeDetected != null)
+                        onSwipeDetected(direction,time);
                 }
             }
         }
