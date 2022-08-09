@@ -5,6 +5,9 @@ using UnityEngine;
 [RequireComponent(typeof(LauncherAim))]
 public class Launcher : MonoBehaviour
 {
+    const float MAX_LAUNCH_FORCE = 0.1f;
+    const float MIN_LAUNCH_FORCE = 3f;
+
     [SerializeField][Range(0.1f, 3f)]
     float _launchForce = 0.1f;
 
@@ -31,5 +34,20 @@ public class Launcher : MonoBehaviour
         float dir = Random.Range(0, 2) == 0 ? -1f:1f;
 
         rb.AddTorque(Random.insideUnitSphere * dir, ForceMode.Impulse);
+    }
+
+
+    void Start() {
+        LaunchTrigger.onLaunchTriggered += OnLaunchTriggered;
+    }
+
+    void OnDestroy() {
+        LaunchTrigger.onLaunchTriggered -= OnLaunchTriggered;
+    }
+
+
+    void OnLaunchTriggered(float force, float angle) {
+        this.launchForce = Mathf.Lerp(MIN_LAUNCH_FORCE, MAX_LAUNCH_FORCE, force);
+        Launch();
     }
 }

@@ -8,7 +8,18 @@ public class LaunchTrigger : MonoBehaviour
     [SerializeField]
     float _depth = 1;
 
+    [SerializeField]
+    float _minSpeed = 1000;
+
+    [SerializeField]
+    float _maxSpeed = 5000;
+
     SwipeDetector _swipe;
+
+
+    public static System.Action<float, float> onLaunchTriggered; // force , angle
+
+
 
     void Awake()
     {
@@ -26,8 +37,17 @@ public class LaunchTrigger : MonoBehaviour
 
 
     void OnSwipeDetected(Vector2 direction, float time) {
-        Debug.Log("DIRECTION: " + direction);
-        Debug.Log("TIME: " + time);
+        float speed = direction.magnitude / time;
+
+        float forceParameter = Mathf.InverseLerp(_minSpeed, _maxSpeed, speed);
+        float angle = Vector2.SignedAngle(Vector2.up, direction);
+
+        if(onLaunchTriggered != null) {
+            onLaunchTriggered(forceParameter, angle);
+        }
+
+
+
         Vector3 pos = new Vector3(direction.x, direction.y, _depth);
         pos = Camera.main.ScreenToWorldPoint(pos);
         

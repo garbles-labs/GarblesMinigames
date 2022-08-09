@@ -6,7 +6,6 @@ public class SwipeDetector : MonoBehaviour
 {
     enum InputType{Mouse=1, Touch=2}
     
-
     [SerializeField]
     float _thresholdTime = 1;
 
