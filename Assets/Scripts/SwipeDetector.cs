@@ -17,7 +17,7 @@ public class SwipeDetector : MonoBehaviour
     public List<float> _times;
     Vector2 _lastMousePosition;
 
-    public System.Action<Vector2, float> onSwipeDetected; // direction,time
+    public System.Action<Vector2, Vector2, float> onSwipeDetected; // origin, direction,time
 
 
 
@@ -58,25 +58,26 @@ public class SwipeDetector : MonoBehaviour
 
 
             if(detect) {
-                if(DetectSwipe(pos, phase, out Vector2 direction, out float time)) {
+                if(DetectSwipe(pos, phase, out Vector2 origin, out Vector2 direction, out float time)) {
                     if(onSwipeDetected != null)
-                        onSwipeDetected(direction,time);
+                        onSwipeDetected(origin,direction,time);
                 }
             }
         }
         else if(_inputType == InputType.Touch) {
             if(Input.touchCount > 0){
-                if(DetectSwipe(Input.touches[0].position, Input.touches[0].phase, out Vector2 direction, out float time)) {
+                if(DetectSwipe(Input.touches[0].position, Input.touches[0].phase,out Vector2 origin, out Vector2 direction, out float time)) {
                     if(onSwipeDetected != null)
-                        onSwipeDetected(direction,time);
+                        onSwipeDetected(origin,direction,time);
                 }
             }
         }
     }
 
 
-    bool DetectSwipe(Vector2 position, TouchPhase phase, out Vector2 direction, out float time) 
+    bool DetectSwipe(Vector2 position, TouchPhase phase, out Vector2 origin, out Vector2 direction, out float time) 
     {
+        origin = Vector2.zero;
         direction = Vector2.zero;
         time = 0f;
 
@@ -108,6 +109,7 @@ public class SwipeDetector : MonoBehaviour
 
             for(int i=0;i<_positions.Count;i++) {
                 if(lastTime - _times[i] <= _thresholdTime){
+                    origin = _positions[i];
                     direction = _positions[_positions.Count-1] - _positions[i];
                     time = _times[_times.Count-1] - _times[i];
 
