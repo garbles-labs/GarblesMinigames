@@ -5,8 +5,8 @@ using UnityEngine;
 [RequireComponent(typeof(LauncherAim))]
 public class Launcher : MonoBehaviour
 {
-    const float MAX_LAUNCH_FORCE = 0.4f;
-    const float MIN_LAUNCH_FORCE = 1.1f;
+    const float MAX_LAUNCH_FORCE = 0.5f;
+    const float MIN_LAUNCH_FORCE = 0.8f;
 
     [SerializeField][Range(0.1f, 3f)]
     float _launchForce = 0.1f;
