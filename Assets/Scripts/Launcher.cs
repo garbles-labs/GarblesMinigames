@@ -12,9 +12,6 @@ public class Launcher : MonoBehaviour
     float _launchForce = 0.1f;
 
     [SerializeField]
-    GameObject _ballPrototype;
-
-    [SerializeField]
     Transform _ballOrigin;
 
     LauncherAim _aim;
@@ -28,7 +25,7 @@ public class Launcher : MonoBehaviour
 
 
     public void Launch() {
-        GameObject ball = Instantiate(_ballPrototype, _ballOrigin.position, _ballOrigin.rotation);
+        GameObject ball = Instantiate(Game.nextPrototype, _ballOrigin.position, _ballOrigin.rotation);
         
         Rigidbody rb = ball.GetComponent<Rigidbody>();
         rb.AddForce(_ballOrigin.forward * _launchForce, ForceMode.Impulse);
