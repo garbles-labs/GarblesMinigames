@@ -9,6 +9,12 @@ public class Game : MonoBehaviour
     [SerializeField]
     Trash _nextTrash;
 
+    [SerializeField]
+    int _pointsPerCorrect = 10;
+
+    [SerializeField]
+    int _totalTime = 30;
+
 
     public GameObject TobaccoPrototype;
     public GameObject JerrycanPrototype;
@@ -30,8 +36,21 @@ public class Game : MonoBehaviour
 
     Dictionary<Trash, GameObject> _prototypes;
 
+    public static System.Action<int> onScore;
+    public static System.Action<float> onTime;
+    public static System.Action<int> onGameEnded;
+
+
+    int _score;
+    float _timeLeft;
+    bool _playing;
+
+    
+
 
     public static Trash nextTrash => _instance._nextTrash;
+
+    public static bool playing => _instance._playing;
 
     public static GameObject nextPrototype{
         get{
@@ -39,13 +58,52 @@ public class Game : MonoBehaviour
         }
     }
 
+
+    public static void Next() 
+    {
+        int index = Random.Range(0, _allTrashes.Count);
+        _instance._nextTrash = _allTrashes[index];
+    }
+
+    public static void Correct(){
+        _instance._score += _instance._pointsPerCorrect;
+
+        if(onScore != null)
+            onScore(_instance._score);
+    }
+
+
+    static List<Trash> _allTrashes;
+
     void Awake() 
     {
         _instance = this;
+        _allTrashes = new List<Trash>() {
+            Trash.Tobacco,
+            Trash.Jerrycan,
+            Trash.CanA,
+            Trash.CanB,
+            Trash.CanC,
+            Trash.CanD,
+            Trash.BrickA,
+            Trash.BrickB,
+            Trash.BrickC,
+            Trash.BottleA,
+            Trash.BottleB,
+            Trash.BottleC,
+            Trash.BottleD,
+            Trash.BottleE,
+            Trash.BottleF,
+            Trash.Cup
+        };
     }
 
     void Start()
     {
+        _score = 0;
+        _timeLeft = _totalTime;
+        _playing = true;
+
         _prototypes  = new Dictionary<Trash, GameObject>();
         _prototypes.Add(Trash.Tobacco, TobaccoPrototype);
         _prototypes.Add(Trash.Jerrycan, JerrycanPrototype);
@@ -65,8 +123,23 @@ public class Game : MonoBehaviour
         _prototypes.Add(Trash.Cup, CupPrototype);
     }
 
-    void Update()
-    {
-        
+    void Update() {
+        if(_playing){
+            _timeLeft -= Time.deltaTime;
+            if(onTime != null)
+                onTime(_timeLeft);
+
+            if(_timeLeft <= 0f)
+                _playing = false;
+        } else {
+            if(onTime != null)
+                onTime(0f);
+
+            if(onGameEnded!=null)
+                onGameEnded(_score);
+
+            gameObject.SetActive(false);
+        }
     }
+
 }

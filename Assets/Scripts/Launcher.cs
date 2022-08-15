@@ -55,5 +55,7 @@ public class Launcher : MonoBehaviour
         //Debug.Log("ANGLE: " + angle);
         //Debug.Log("LAUNCH FORCE: " + _launchForce);
         Launch();
+
+        Game.Next();
     }
 }

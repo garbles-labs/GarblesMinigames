@@ -10,15 +10,24 @@ public class Bin : MonoBehaviour
     [SerializeField]
     Animator _animator;
 
+    [SerializeField]
+    AudioSource _correctSound;
+
+    [SerializeField]
+    AudioSource _wrongSound;
+
 
     public void Enter(TrashObject obj) {
         bool correct = (_trashType == obj.trashType);
         
-        if(correct)
+        if(correct){
             _animator.SetTrigger("Correct");
-        else
+            _correctSound.Play();
+            Game.Correct();
+        }
+        else{
             _animator.SetTrigger("Incorrect");
-
-
+            _wrongSound.Play();
+        }
     }
 }

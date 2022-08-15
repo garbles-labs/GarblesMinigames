@@ -10,4 +10,10 @@ public class TrashObject : MonoBehaviour
 
     public TrashType trashType => _type;
 
+
+    public void Clean() {
+        transform.Find("detectable").gameObject.SetActive(false);
+        Destroy(gameObject, 5);
+    }
+
 }

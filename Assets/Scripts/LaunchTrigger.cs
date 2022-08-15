@@ -38,6 +38,8 @@ public class LaunchTrigger : MonoBehaviour
 
 
     void OnSwipeDetected(Vector2 origin, Vector2 direction, float time) {
+        if(Game.playing==false)
+            return;
         float speed = direction.magnitude / time;
 
         float forceParameter = Mathf.InverseLerp(_maxSpeed, _minSpeed, speed);
