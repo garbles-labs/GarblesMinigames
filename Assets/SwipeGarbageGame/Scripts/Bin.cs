@@ -19,6 +19,7 @@ public class Bin : MonoBehaviour
 
     public void Enter(TrashObject obj) {
         bool correct = (_trashType == obj.trashType);
+        obj.Hole();
         
         if(correct){
             _animator.SetTrigger("Correct");
