@@ -11,10 +11,16 @@ public class Launcher : MonoBehaviour
     [SerializeField][Range(0.1f, 3f)]
     float _launchForce = 0.1f;
 
+    [SerializeField][Range(5f, 70f)]
+    float _maxYaw = 30;
+    [SerializeField][Range(2, 5)]
+    int _totalAngles = 3;
+
     [SerializeField]
     Transform _ballOrigin;
 
     LauncherAim _aim;
+    public List<float> _allAngles;
 
 
     public float launchForce{set{
@@ -37,6 +43,15 @@ public class Launcher : MonoBehaviour
 
     void Awake() {
         _aim = GetComponent<LauncherAim>();
+
+        // calculate all angles
+        float diffAngle = (_maxYaw * 2)/(_totalAngles-1);
+        float currAngle = -_maxYaw;
+        _allAngles = new List<float>();
+        for(int i=0;i<_totalAngles;i++) {
+            _allAngles.Add(currAngle);
+            currAngle += diffAngle;
+        }
     }
 
 
@@ -51,8 +66,20 @@ public class Launcher : MonoBehaviour
 
     void OnLaunchTriggered(float force, float angle) {
         this.launchForce = Mathf.Lerp(MIN_LAUNCH_FORCE, MAX_LAUNCH_FORCE, force);
-        _aim.yaw = angle;
+
+        float best = 999;
+        int bestIndex = -1;
+        for(int i=0;i<_allAngles.Count;i++) {
+            float dist = Mathf.Abs(_allAngles[i] - angle);
+            if(dist < best){
+                best = dist;
+                bestIndex = i;
+            }
+        }
+
+        _aim.yaw = _allAngles[bestIndex];
         //Debug.Log("ANGLE: " + angle);
+        //Debug.Log("BEST: " + best);
         //Debug.Log("LAUNCH FORCE: " + _launchForce);
         Launch();
 

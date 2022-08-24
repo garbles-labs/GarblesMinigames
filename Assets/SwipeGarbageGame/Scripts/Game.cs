@@ -37,7 +37,7 @@ public class Game : MonoBehaviour
     Dictionary<Trash, GameObject> _prototypes;
 
     public static System.Action<int> onScore;
-    public static System.Action<float> onTime;
+    public static System.Action<float,float> onTime;
     public static System.Action<int> onGameEnded;
 
 
@@ -127,13 +127,13 @@ public class Game : MonoBehaviour
         if(_playing){
             _timeLeft -= Time.deltaTime;
             if(onTime != null)
-                onTime(_timeLeft);
+                onTime(_timeLeft, _totalTime);
 
             if(_timeLeft <= 0f)
                 _playing = false;
         } else {
             if(onTime != null)
-                onTime(0f);
+                onTime(0f, _totalTime);
 
             if(onGameEnded!=null)
                 onGameEnded(_score);
