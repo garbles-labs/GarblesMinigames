@@ -67,6 +67,11 @@ public class Launcher : MonoBehaviour
     void OnLaunchTriggered(float force, float angle) {
         this.launchForce = Mathf.Lerp(MIN_LAUNCH_FORCE, MAX_LAUNCH_FORCE, force);
 
+        angle = Mathf.Min(angle, _maxYaw);
+        angle = Mathf.Max(angle, -_maxYaw);
+        _aim.yaw = angle;
+        /*
+
         float best = 999;
         int bestIndex = -1;
         for(int i=0;i<_allAngles.Count;i++) {
@@ -78,6 +83,7 @@ public class Launcher : MonoBehaviour
         }
 
         _aim.yaw = _allAngles[bestIndex];
+        */
         //Debug.Log("ANGLE: " + angle);
         //Debug.Log("BEST: " + best);
         //Debug.Log("LAUNCH FORCE: " + _launchForce);
